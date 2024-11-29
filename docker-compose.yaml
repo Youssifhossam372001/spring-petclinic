@@ -1,8 +1,6 @@
 services:
   petclinic:
-    build:
-      context: ./
-      dockerfile: dockerfile
+    image: youssif37/petclinic:latest
     ports:
       - "8080:8080"
     environment:
