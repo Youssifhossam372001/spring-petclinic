@@ -4,20 +4,18 @@ pipeline{
     }
 
     stages{
-        stage('Build Docker Image'){
-            steps{
-                script{
-                    def repoUrl = 'https://github.com/Youssifhossam372001/spring-petclinic'
-                    sh """
-			rm -rf app
-                        git clone ${repoUrl} app
-
-                        cd app
-                        docker build -t petclinic .
-                    """
-                }
+        stage('Maven Install') {
+            agent {         
+                docker {          
+                    image 'maven:3.5.0'         
+                }       
+            }       
+            steps {
+                sh 'mvn clean install'
             }
         }
+   
+
 
         stage('Push to Docker Hub') {
             steps {
@@ -35,11 +33,10 @@ pipeline{
         stage('Deploy Application') {
             steps {
                 script {
-                    def dockerComposePath = 'app/docker-compose.yaml' 
+                    def dockerComposePath = 'app/docker-compose.yaml'
                     sh "docker-compose -f ${dockerComposePath} up -d"
                 }
             }
         }
-
     }
 }
