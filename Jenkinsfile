@@ -9,6 +9,7 @@ pipeline{
                 script{
                     def repoUrl = 'https://github.com/Youssifhossam372001/spring-petclinic'
                     sh """
+			rm -rf app
                         git clone ${repoUrl} app
 
                         cd app
