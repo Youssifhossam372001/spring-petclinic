@@ -14,7 +14,7 @@ pipeline{
             steps{
                 script{
                     sh """
-                        docker build -t petclinic .
+                        docker build -t youssif37/petclinic .
                     """
                 }
             }
@@ -26,7 +26,7 @@ pipeline{
                     def dockerHubCredentialsId = 'dockerhub'
                     withDockerRegistry([credentialsId: "${dockerHubCredentialsId}", url: ""]) {
                         sh """
-                            docker push petclinic
+                            docker push youssif37/petclinic
                         """
                     }
                 }
