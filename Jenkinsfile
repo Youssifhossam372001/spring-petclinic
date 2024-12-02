@@ -4,21 +4,19 @@ pipeline{
     }
 
     stages{
-        stage('Maven Install') {
-            agent {         
-                docker {          
-                    image 'maven:3.5.0'         
-                }       
-            }       
+        stage('Checkout Code') {
             steps {
-                sh 'mvn clean install'
+                checkout scm
             }
         }
-   
-        stage('Docker Build') {
-            agent any
-            steps {
-                 sh 'docker build -t petclinic .'
+
+        stage('Build Docker Image'){
+            steps{
+                script{
+                    sh """
+                        docker build -t petclinic .
+                    """
+                }
             }
         }
 
@@ -38,11 +36,11 @@ pipeline{
         stage('Deploy Application') {
             steps {
                 script {
-                    def dockerComposePath = 'app/docker-compose.yaml'
+                    def dockerComposePath = 'app/docker-compose.yaml' 
                     sh "docker-compose -f ${dockerComposePath} up -d"
                 }
             }
         }
+
     }
 }
-
