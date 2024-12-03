@@ -1,21 +1,23 @@
+version: "3.8"
 services:
   petclinic:
     image: youssif37/petclinic
     ports:
       - "8081:8080"
-    environments:
+    environment:
       - SPRING_PROFILES_ACTIVE=postgres
       - POSTGRES_USER=petclinic
       - POSTGRES_PASS=petclinic
       - POSTGRES_URL=jdbc:postgresql://postgres:5432/petclinic
-
     depends_on:
       - postgres
+
   postgres:
-    image: postgres:17.0
+    image: postgres:15.3
     ports:
       - "5432:5432"
-    environments:
+    environment:
       - POSTGRES_PASSWORD=petclinic
       - POSTGRES_USER=petclinic
       - POSTGRES_DB=petclinic
+
