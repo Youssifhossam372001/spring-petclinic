@@ -36,8 +36,7 @@ pipeline{
         stage('Deploy Application') {
             steps {
                 script {
-                    def dockerComposePath = 'app/docker-compose.yaml' 
-                    sh "docker-compose -f ${dockerComposePath} up -d"
+                    sh "docker-compose up -d"
                 }
             }
         }
